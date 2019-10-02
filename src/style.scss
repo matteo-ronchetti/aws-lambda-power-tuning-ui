@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#tooltip {
+  @apply py-2 px-3 absolute rounded-lg text-gray-200 hidden;
+  background: rgba(5, 5, 10, 0.7);
+}
