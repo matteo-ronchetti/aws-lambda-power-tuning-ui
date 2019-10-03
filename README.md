@@ -6,11 +6,14 @@
 This project provides a simple UI to visualize the results of [AWS Lambda Power Tuning](https://github.com/alexcasalboni/aws-lambda-power-tuning).
 The UI is a static HTML page that reads data from URL hash.
 
+![Sample Screenshot](sample-screenshot.png?raw=true)
+
 ## Local building and execution
 First you need to clone the source and install the [bundler](https://gitlab.com/matteo-ronchetti/rosh-bundler)
 by running
 ```bash
 git clone https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui.git
+cd aws-lambda-power-tuning-ui
 npm install git+https://gitlab.com/matteo-ronchetti/rosh-bundler.git
 ```
 Then run
