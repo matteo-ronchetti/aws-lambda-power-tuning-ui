@@ -4,5 +4,31 @@
 [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 This project provides a simple UI to visualize the results of [AWS Lambda Power Tuning](https://github.com/alexcasalboni/aws-lambda-power-tuning).
-
 The UI is a static HTML page that reads data from URL hash.
+
+## Local building and execution
+First you need to clone the source and install the [bundler](https://gitlab.com/matteo-ronchetti/rosh-bundler)
+by running
+```bash
+git clone https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui.git
+npm install git+https://gitlab.com/matteo-ronchetti/rosh-bundler.git
+```
+Then run
+```bash
+node bundler.js
+```
+to build and serve at [localhost:3000](http://localhost:3000/).
+
+## URL query string format
+The URL hash is formatted as `<lambda_size>;<execution_time>;<execution_cost>`
+where each parameter `<x>` is a list encoded in base64 with proper data type
+(int16 for size, float32 for time and cost).
+
+This can be achieved using the `encode` function defined [here](https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui/blob/master/src/js/encode.js#L1):
+```javascript
+let sizes = [128, 256, 512, 1024, 1536];
+let times = [16.0, 8.0, 4.0, 2.8, 2.1];
+let costs = [0.01, 0.008, 0.005, 0.009, 0.012];
+
+window.location.hash = encode(sizes, Int16Array) + ";" + encode(times) + ";" + encode(costs)
+```
