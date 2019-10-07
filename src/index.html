@@ -4,18 +4,70 @@
     <script src="/script.js"></script>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-<div class="w-full lg:w-1/2">
-    <canvas id="canvas"></canvas>
+<body class="bg-gray-300">
+<div class="text-4xl p-4 text-center text-gray-800">AWS Lambda Power Tuning Results</div>
+<div class="flex justify-center w-full" id="error">
+    <div role="alert" class="mt-10 mx-6 lg:w-1/2">
+        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            <span id="error-title"></span>
+        </div>
+        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p id="error-msg">Something not ideal might be happening.</p>
+        </div>
+    </div>
 </div>
+<main id="report" class="flex flex-row lg:justify-center lg:items-start px-6 xl:px-24 flex-wrap hidden">
+    <div class="card p-2 m-4 lg:flex-1 w-full">
+        <canvas id="canvas"></canvas>
+        <div class="text-center text-xs text-gray-600">Shown results are averages over multiple runs</div>
+    </div>
+    <div class="flex flex-col">
+        <div class="card p-4 m-4 text-center">
+            <h2 class="font-semibold">Best Cost</h2>
+            <div class="text-4xl font-light" id="min-cost">XXXMB</div>
+        </div>
+        <div class="card p-4 m-4 text-center">
+            <h2 class="font-semibold">Worst Cost</h2>
+            <div class="text-4xl font-light" id="max-cost">XXXMB</div>
+        </div>
+        <div class="card p-4 m-4 text-center">
+            <h2 class="font-semibold">Balanced</h2>
+            <div class="text-4xl font-light" id="balanced">XXXMB</div>
+        </div>
+    </div>
+    <div class="flex flex-col">
+        <div class="card p-4 m-4 text-center">
+            <h2 class="font-semibold">Best Time</h2>
+            <div class="text-4xl font-light" id="min-time">XXXMB</div>
+        </div>
+        <div class="card p-4 m-4 text-center">
+            <h2 class="font-semibold">Worst Time</h2>
+            <div class="text-4xl font-light" id="max-time">XXXMB</div>
+        </div>
+    </div>
+</main>
 <div id="tooltip">
     <h2 class="font-semibold text-white">Size: 1024</h2>
     <div>Time: 15ms</div>
     <div>Cost: 0.00014$</div>
 </div>
+<footer class="bg-gray-300 fixed right-0 bottom-0 px-1 text-gray-700 text-sm">
+    <a href="https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui" class="mr-6">Project github</a>
+    <a href="https://github.com/alexcasalboni/aws-lambda-power-tuning">AWS Lambda Power Tuning</a>
+</footer>
 </body>
 <script>
-    if (window.location.hash) { main(); }
-    window.addEventListener("hashchange", main);
+    const app = new App();
+
+    function onhashchange() {
+        if (window.location.hash) {
+            app.show(window.location.hash.slice(1));
+        } else {
+            app.error("empty");
+        }
+    }
+
+    window.addEventListener("hashchange", onhashchange);
+    onhashchange();
 </script>
 </html>

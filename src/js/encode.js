@@ -8,5 +8,5 @@ function encode(input, c = Float32Array) {
 }
 
 function decode(x, c = Float32Array) {
-    return new c(base64js.toByteArray(x).buffer);
+    return Array.from(new c(base64js.toByteArray(x).buffer));
 }
