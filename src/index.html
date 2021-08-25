@@ -34,6 +34,11 @@
             <h2 class="font-semibold">Balanced</h2>
             <div class="text-4xl font-light" id="balanced">XXXMB</div>
         </div>
+        <div class="p-2 m-2 text-center">
+            <button id="compare" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Compare
+            </button>
+        </div>
     </div>
     <div class="flex flex-col">
         <div class="card p-4 m-4 text-center">
@@ -45,11 +50,15 @@
             <div class="text-4xl font-light" id="max-time">XXXMB</div>
         </div>
     </div>
+
 </main>
 <div id="tooltip">
-    <h2 class="font-semibold text-white">Size: 1024</h2>
-    <div>Time: 15ms</div>
-    <div>Cost: 0.00014$</div>
+    <h2 id="tooltip-power" class="font-semibold text-white">Size: 1024</h2>
+    <div id="tooltip-time-1">Time: 0ms</div>
+    <div id="tooltip-cost-1">Cost: 0.000$</div>
+    <hr id="tooltip-separator" class="m-1">
+    <div id="tooltip-time-2">Time: 0ms</div>
+    <div id="tooltip-cost-2">Cost: 0.000$</div>
 </div>
 <footer class="bg-gray-300 fixed right-0 bottom-0 px-1 text-gray-700 text-sm">
     <a href="https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui" class="mr-6">Project github</a>
@@ -61,11 +70,24 @@
 
     function onhashchange() {
         if (window.location.hash) {
-            app.show(window.location.hash.slice(1));
+            const hash = window.location.hash.slice(1);
+            app.show(hash);
         } else {
             app.error("empty");
         }
     }
+
+    document.getElementById("compare").addEventListener("click", function() {
+        const URL = prompt("Enter another visualization URL:");
+        const hash2 = URL.split('#')[1];
+        if(!hash2) {
+            alert("Invalid URL. Please try again with a valid visualization URL.");
+            return;
+        }
+        const legend = prompt("Enter a name for this function:", "2");
+        const hash = window.location.hash.slice(1);
+        app.show(hash, hash2, legend);
+    });
 
     window.addEventListener("hashchange", onhashchange);
     onhashchange();
