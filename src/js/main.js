@@ -166,7 +166,7 @@ class App {
         return { powers, times, costs }
     }
 
-    show(hash, hash2 = null, legend = null) {
+    show(hash, hash2 = null, legend1 = "", legend2 = "") {
         try {
             var data = this.parseHash(hash);
         } catch (e) {
@@ -217,14 +217,14 @@ class App {
         let chartData = {
             labels: powerValues,
             datasets: [{
-                label: 'Invocation Time (ms)',
+                label: `Invocation Time ${(legend1?legend1+" ":"")}(ms)`,
                 borderColor: this.chartColors.red,
                 backgroundColor: this.chartColors.red,
                 fill: false,
                 data: data.times,
                 yAxisID: 'time-axis',
             }, {
-                label: 'Invocation Cost (USD)',
+                label: `Invocation Cost ${(legend1?legend1+" ":"")}(USD)`,
                 borderColor: this.chartColors.blue,
                 backgroundColor: this.chartColors.blue,
                 fill: false,
@@ -236,14 +236,14 @@ class App {
         if (hash2) {
             // add two more datasets with different legend & colors (but same axis ID)
             chartData.datasets.push(...[{
-                label: `Invocation Time ${legend+" "}(ms)`,
+                label: `Invocation Time ${(legend2?legend2+" ":"")}(ms)`,
                 borderColor: this.chartColors.orange,
                 backgroundColor: this.chartColors.orange,
                 fill: false,
                 data: data2.times,
                 yAxisID: 'time-axis',
             }, {
-                label: `Invocation Cost ${legend+" "}(USD)`,
+                label: `Invocation Cost ${(legend2?legend2+" ":"")}(USD)`,
                 borderColor: this.chartColors.green,
                 backgroundColor: this.chartColors.green,
                 fill: false,
