@@ -9,16 +9,25 @@ The UI is a static HTML page that reads data from URL hash.
 ![Sample Screenshot](sample-screenshot.png?raw=true)
 
 ## Local building and execution
-First you need to clone the source and install the [bundler](https://gitlab.com/matteo-ronchetti/rosh-bundler)
-by running
+
+
+First you need to clone the source and then install the bundler
 ```bash
-git clone https://github.com/matteo-ronchetti/aws-lambda-power-tuning-ui.git
+# Clone
+git clone https://github.com/digio/aws-lambda-power-tuning-ui.git
 cd aws-lambda-power-tuning-ui
-npm install git+https://gitlab.com/matteo-ronchetti/rosh-bundler.git
-```
-Then run
-```bash
-node bundler.js
+
+# install build dependencies
+npm install 
+
+# build
+npm run build
+
+# serve
+node run serve
+
+# Build then serve
+node start
 ```
 to build and serve at [localhost:3000](http://localhost:3000/).
 
@@ -35,3 +44,6 @@ let costs = [0.01, 0.008, 0.005, 0.009, 0.012];
 
 window.location.hash = encode(sizes, Int16Array) + ";" + encode(times) + ";" + encode(costs)
 ```
+
+---
+[repo]: https://github.com/digio/aws-lambda-power-tuning-ui
