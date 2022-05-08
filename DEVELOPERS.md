@@ -7,7 +7,6 @@ It also explains the basic mechanics of using `git` and `node`
 - [Project Organisation](#project-organisation)
 - [Installing NPM Modules](#installing)
 - [Running Tests](#running-tests)
-- [Testing with a Serverless project](#testing-with-a-serverless-project)
 - [Formatting your Source Code](#formatting-your-source-code)
 - [Linting/verifying your Source Code](#lintingverifying-your-source-code)
 - [Semantic Release setup](#semantic-release-setup)
@@ -30,7 +29,7 @@ following products on your development machine:
 The project is organised into the following folder structure:
 
 - `/` - Project-level configuration (linting rules, CI, docs, license)
-- `fixtures/` - Files used during tests to simulate running the plugin inside Serverless Framework
+- `public/` - Files that are deployed to GitHub pages (web-content). The generated JS & CSS files are copied here.
 - `src/` - The source code and test specifications
 
 ## Installing
@@ -52,28 +51,6 @@ npm run test:watch
 # Run tests and see the coverage report
 npm run test:reportlist
 ```
-
-## Testing with a Serverless project
-
-Use `npm link` to symlink this local package into your global NPM registry on your computer. It will
-then be available for use within other NPM projects:
-
-```shell script
-# In this project root:
-npm link
-# > /.nvm/versions/node/v10.17.0/lib/node_modules/serverless-simple-alias -> /mydev/serverless/serverless-simple-alias
-
-# Change to the Serverless project directory that wants to test this package
-cd ../my-serverless-proj
-
-# Create a local symlink to serverless-simple-alias
-npm link serverless-simple-alias
-# > Symlinking "/mydev/my-serverless-proj/node_modules"
-# >     --> "/.nvm/versions/node/v10.17.0/lib/node_modules/serverless-simple-alias"
-```
-
-Inside the Serverless project that will test this plugin, modify the serverless config file
-to include the plugin and define the configuration object [see Usage][readme-usage].
 
 ## Formatting your source code
 

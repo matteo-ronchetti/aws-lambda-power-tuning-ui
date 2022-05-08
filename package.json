@@ -25,7 +25,8 @@
     "lint": "eslint --fix src/**/*.js *.js",
     "verify": "eslint --max-warnings=0  src/**/*.js *.js",
     "pre-push": "npm-run-all verify --silent",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "serve": "sirv public"
   },
   "devDependencies": {
     "autoprefixer": "10.4.7",

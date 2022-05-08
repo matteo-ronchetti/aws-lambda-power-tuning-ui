@@ -22,6 +22,8 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run verify
+      - name: Build
+        run: npm run build
 
   release:
     # Only release on push to master
@@ -39,6 +41,8 @@ jobs:
       - name: Install
         run: npm ci
       # From https://github.com/marketplace/actions/github-pages-action
+      - name: Build
+        run: npm run build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

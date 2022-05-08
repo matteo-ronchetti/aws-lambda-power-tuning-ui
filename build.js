@@ -4,7 +4,7 @@ import { sassPlugin } from 'esbuild-sass-plugin';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
-import tailwindConfig from './tailwind.config.js'
+import tailwindConfig from './tailwind.config.js';
 
 export const config = {
   entryPoints: ['src/index.js', 'src/style.scss'],
@@ -17,10 +17,7 @@ export const config = {
   plugins: [
     sassPlugin({
       async transform(source, resolveDir) {
-        const { css } = await postcss(
-          autoprefixer,
-          tailwindcss(tailwindConfig),
-        ).process(source,  { from: undefined });
+        const { css } = await postcss(autoprefixer, tailwindcss(tailwindConfig)).process(source, { from: undefined });
         return css;
       },
     }),
