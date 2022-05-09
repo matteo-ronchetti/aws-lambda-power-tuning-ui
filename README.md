@@ -8,13 +8,14 @@ The UI is a static HTML page that reads data from URL hash.
 
 **Why the fork?**
 
-We've added the ability to persist comparison-graphs, which was missing from the original repo. 
+We've added the ability to persist comparison-graphs, which is not implemented in the original repo. This is a useful feature
+so that before-after comparisons can be shared.
 
 
 # Usage
 
-[Demo](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;)
-[Demo with comparison](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;gAEAAgAEAAYACA==;0+hrRh7TR0YDoxBG/mQCRjclCkY=;sX2hOBZhtji8AgQ5ZIcyOV8vfDk=;JS%20x86;JS%20ARM64)
+- [Basic Demo](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;)
+- [Comparison Demo](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;gAEAAgAEAAYACA==;0+hrRh7TR0YDoxBG/mQCRjclCkY=;sX2hOBZhtji8AgQ5ZIcyOV8vfDk=;JS%20x86;JS%20ARM64)
 
 The website is deployed to the `gh-pages` branch of this repo, which is hosted at [https://digio.github.io/aws-lambda-power-tuning-ui/](https://digio.github.io/aws-lambda-power-tuning-ui/)
 
