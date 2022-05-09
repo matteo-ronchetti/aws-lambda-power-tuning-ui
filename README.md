@@ -6,16 +6,35 @@
 This project provides a simple UI to visualize the results of [AWS Lambda Power Tuning](https://github.com/alexcasalboni/aws-lambda-power-tuning).
 The UI is a static HTML page that reads data from URL hash.
 
+**Why the fork?**
+
+We've added the ability to persist comparison-graphs, which was missing from the original repo. 
+
+
 # Usage
 
-This UI is deployed to the `gh-pages` branch, which is hosted at [https://digio.github.io/aws-lambda-power-tuning-ui/](https://digio.github.io/aws-lambda-power-tuning-ui/)
+[Demo](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;)
+[Demo with comparison](https://digio.github.io/aws-lambda-power-tuning-ui/#gAEAAgAEAAYACA==;Go9qRqDLVUbymEpGgC0jRn/iMkY=;41bGOHAK8Th8bWQ5mvyJObyvyTk=;gAEAAgAEAAYACA==;0+hrRh7TR0YDoxBG/mQCRjclCkY=;sX2hOBZhtji8AgQ5ZIcyOV8vfDk=;JS%20x86;JS%20ARM64)
+
+The website is deployed to the `gh-pages` branch of this repo, which is hosted at [https://digio.github.io/aws-lambda-power-tuning-ui/](https://digio.github.io/aws-lambda-power-tuning-ui/)
+
+![Sample Screenshot](docs/sample-screenshot.png?raw=true)
 
 # Updating the visualisation URL
 
 See the [docs](https://github.com/alexcasalboni/aws-lambda-power-tuning/blob/fd72b92ad8e1288da6f580bad1d4b24ff603a0f8/README-INPUT-OUTPUT.md#state-machine-configuration-at-deployment-time)
 for how to set the `visualisationURL` when **deploying** the PowerTune Lambda.
 
-![Sample Screenshot](sample-screenshot.png?raw=true)
+Alternatively, an **existing** deployment's `visualisationURL` value can also be changed:
+
+1. Open AWS Console
+2. Goto Lambda > Applications > *your powertune application*
+3. In the resources section, select the `analyzer` Lambda to open it in the Lambda console.
+   ![](docs/lambda-analyzer.png?raw=true)
+4. Select the Configuration tab > Environment variables
+5. Press the Edit button
+6. Change the value of the `visualizationURL` to `https://digio.github.io/aws-lambda-power-tuning-ui/` then press Save.
+
 
 ## Local building and execution
 
@@ -63,3 +82,28 @@ plus two legend fields:  `<lambda_size1>;<execution_time1>;<execution_cost1>;<la
 
 ---
 [repo]: https://github.com/digio/aws-lambda-power-tuning-ui
+
+# Node Execution script
+
+[scripts/powertune.js](scripts/powertune.cjs) is a script which calls the [PowerTune](https://github.com/alexcasalboni/aws-lambda-power-tuning) stack to allow tuning of the AWS Lambdas.
+It is designed to replace the [execute.sh](https://github.com/alexcasalboni/aws-lambda-power-tuning/tree/master/scripts/execute.sh) that is provided by PowerTune.
+
+This script can be executed from the command line:
+
+``` bash
+# The config-file argument is relative to the current directory
+$ ./scripts/powertune.js path/to/powertuneConfig.json
+
+```
+
+See [configuration information](https://github.com/alexcasalboni/aws-lambda-power-tuning/blob/master/README-INPUT-OUTPUT.md) for the basics, but note that this Node script adds the following capabilities:
+- Reference one external JSON or JS files when defining the payload (see `scripts/examples/basic.json`)
+- Reference multiple external JSON or JS files when defining the payload (see `scripts/examples/multiInclude.json`)
+- Pass arguments to included JS files (see `scripts/examples/includeFunctionWithArgs.json`)
+
+## DNPM ependencies
+
+This script requires the following NodeJS packages (which are in this repo's `package.json`):
+- `aws-sdk`
+- `ora`
+- `p-pipe`

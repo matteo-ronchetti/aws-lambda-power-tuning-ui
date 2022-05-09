@@ -10,7 +10,7 @@ export const config = {
   entryPoints: ['src/index.js', 'src/style.scss'],
   platform: 'browser',
   bundle: true,
-  //minify: true,
+  minify: true,
   sourcemap: true,
   target: ['es2020'],
   outdir: 'public',

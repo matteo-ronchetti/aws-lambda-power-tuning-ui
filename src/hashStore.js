@@ -1,11 +1,11 @@
 export class HashStore {
-  constructor(onChangeCallback, onError) {
-    this.onChangeCallback = onChangeCallback;
-    this.onError = onError;
+  constructor() {
+    this.listeners = [];
     window.addEventListener('hashchange', this.#onHashChange.bind(this));
   }
 
-  ready() {
+  addListener(onChange, onError) {
+    this.listeners.push([onChange, onError]);
     this.#onHashChange();
   }
 
@@ -15,9 +15,9 @@ export class HashStore {
 
   #onHashChange() {
     if (window.location.hash) {
-      this.onChangeCallback(window.location.hash.slice(1)); // remove the '#' char
+      this.listeners.forEach(([onChange]) => onChange(window.location.hash.slice(1))); // remove the '#' char
     } else {
-      this.onError('empty');
+      this.listeners.forEach(([, onError]) => onError('empty'));
     }
   }
 }

@@ -38,7 +38,7 @@ const chartOptions = {
       {
         ticks: {
           beginAtZero: true,
-          callback: (value, index, values) => `${smartRound(value)} ms`,
+          callback: (value /*, index, values*/) => `${smartRound(value)} ms`,
         },
         type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
         display: true,
@@ -52,7 +52,7 @@ const chartOptions = {
       {
         ticks: {
           beginAtZero: true,
-          callback: (value, index, values) => `${smartRound(value)} $`,
+          callback: (value /*, index, values*/) => `${smartRound(value)} $`,
         },
         type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
         display: true,
@@ -72,8 +72,8 @@ const chartOptions = {
 };
 
 export class App {
-  constructor(storeClass = HashStore) {
-    this.store = storeClass;
+  constructor(store) {
+    this.store = store;
     this.canvas = document.querySelector('canvas');
     this.reportElem = document.getElementById('report');
     this.errorElem = document.getElementById('error');
@@ -85,24 +85,18 @@ export class App {
     this.data2URL = '';
     this.legend1 = '';
     this.legend2 = '';
-  }
 
-  init() {
-    // Mutate the store from being a class reference to a class instance
-    // (I can't initialise the store in the constructor - the silliness of OO programming)
-    this.store = new this.store(this.show.bind(this), this.error.bind(this));
-    // Tell the hash-watcher we are ready
-    this.store.ready();
+    this.store.addListener(this.show.bind(this), this.error.bind(this));
   }
 
   setData1(parts) {
     this.data1 = parseHash(parts);
-    this.data1URL = window.location.origin + '#' + parts.join(HASH_DELIM);
+    this.data1URL = getURLForHash(parts.join(HASH_DELIM));
   }
 
   setData2(parts) {
     this.data2 = parseHash(parts);
-    this.data2URL = window.location.origin + '#' + parts.join(HASH_DELIM);
+    this.data2URL = getURLForHash(parts.join(HASH_DELIM));
   }
 
   error(err) {
@@ -111,27 +105,26 @@ export class App {
 
     switch (err) {
       case 'empty':
-        let sample =
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '#' +
+        let sampleURL = getURLForHash(
           encode([128, 256, 512, 1024], Int16Array) +
-          HASH_DELIM +
-          encode([36555.39, 18441.58, 8539.34, 3870.76]) +
-          HASH_DELIM +
-          encode([0.00007612, 0.00007696, 0.00007155, 0.00006489]);
+            HASH_DELIM +
+            encode([36555.39, 18441.58, 8539.34, 3870.76]) +
+            HASH_DELIM +
+            encode([0.00007612, 0.00007696, 0.00007155, 0.00006489]),
+        );
         document.getElementById('error-title').innerHTML = 'Error: URL must contain data in the hash!';
         document.getElementById(
           'error-msg',
-        ).innerHTML = `Your URL is ${window.location} and should be something like <a href="${sample}" class="dont-break-out">${sample}</a><br>Please refer to the <a href="${DOC_URL}">documentation</a>.`;
+        ).innerHTML = `Your URL is ${window.location} and should be something like <a href="${sampleURL}" class="dont-break-out">${sampleURL}</a><br>Please refer to the <a href="${DOC_URL}">documentation</a>.`;
         break;
+
       case 'malformed':
         document.getElementById('error-title').innerHTML = 'Error: malformed URL parameters!';
         document.getElementById(
           'error-msg',
         ).innerHTML = `Please check your URL parameters, refer to the <a href='${DOC_URL}#url-format'>documentation</a>.`;
         break;
+
       default:
         // general error
         document.getElementById('error-title').innerHTML = 'Error';
@@ -169,6 +162,12 @@ export class App {
 
       this.legend1 = decodeURIComponent(hashParts[6]);
       this.legend2 = decodeURIComponent(hashParts[7]);
+    } else {
+      // If we don't have the comparison data, reset the comparison-data fields
+      this.data2 = null;
+      this.data2URL = '';
+      this.legend1 = '';
+      this.legend2 = '';
     }
 
     this.reportElem.style.display = 'flex';
@@ -295,6 +294,10 @@ function parseHash(parts) {
   const costs = decode(parts[2]);
   // console.log(powers.toString(), times.toString(), costs.toString());
   return { powers, times, costs };
+}
+
+function getURLForHash(hash) {
+  return `${window.location.origin}${window.location.pathname}#${hash}`;
 }
 
 function customTooltip(tooltipModel) {

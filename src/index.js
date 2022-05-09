@@ -1,13 +1,12 @@
 import { App } from './app.js';
 import { HashStore } from './hashStore';
 
-const app = new App(HashStore);
-app.init();
+const app = new App(new HashStore());
 const compareModal = document.getElementById('modal-compare');
 
-initUI();
+setupUI();
 
-function initUI() {
+function setupUI() {
   window.addEventListener('click', (event) => {
     if (event.target === compareModal) {
       compareModal.style.display = 'none';
