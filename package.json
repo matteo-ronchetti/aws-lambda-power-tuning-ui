@@ -1,7 +1,7 @@
 {
-  "name": "aws-lambda-power-tuning-ui",
+  "name": "ptx",
   "version": "0.0.0-development",
-  "description": "DigIO fork of aws-lambda-power-tuning-ui + scripts",
+  "description": "PowerTune execution script + fork of aws-lambda-power-tuning-ui that includes shareable comparison URL",
   "type": "module",
   "repository": {
     "type": "git",
@@ -14,6 +14,10 @@
   ],
   "author": "Brett Uglow",
   "license": "Apache-2.0",
+  "exports": "./scripts/ptx.js",
+  "bin": {
+    "ptx": "scripts/ptx.js"
+  },
   "bugs": {
     "url": "https://github.com/digio/aws-lambda-power-tuning-ui/issues"
   },
@@ -27,6 +31,11 @@
     "pre-push": "npm-run-all verify --silent",
     "semantic-release": "semantic-release",
     "serve": "sirv public"
+  },
+  "dependencies": {
+    "aws-sdk": "2.1133.0",
+    "p-pipe": "4.0.0",
+    "ora": "6.1.0"
   },
   "devDependencies": {
     "autoprefixer": "10.4.7",
