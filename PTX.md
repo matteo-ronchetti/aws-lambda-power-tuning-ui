@@ -11,6 +11,10 @@ It is designed to replace the [execute.sh](https://github.com/alexcasalboni/aws-
 **Note**: PTX will run using the AWS profile that is available in your shell/terminal. Set the `AWS_PROFILE` environment variable to point to the AWS profile that
 you wish to use this tool in.
 
+## Prerequisite Software
+
+- [Node.js](http://nodejs.org) version 14+ (to use the `npx` tool with this tool)
+
 ## Usage
 
 ``` bash
@@ -24,7 +28,7 @@ export AWS_SDK_LOAD_CONFIG=true
 $ export PTX_STACK_NAME=serverlessrepo-aws-lambda-power-tuning
 
 # The config-file argument is relative to the current directory
-$ npm ptx path/to/powertuneConfig.json
+$ npx ptx path/to/powertuneConfig.json
 
 ```
 
