@@ -1,0 +1,15 @@
+{
+  "lambdaARN": "arn:aws:lambda:ap-southeast-2:0000000000:function:your-lambda",
+  "powerValues": [384, 512, 768, 1024, 1280],
+  "num": 20,
+  "payload": [
+    {
+      "payload": {
+        "$$include1": "../payloads/p2.json"
+      },
+      "weight": 20
+    }
+  ],
+  "parallelInvocation": true,
+  "strategy": "balanced"
+}
