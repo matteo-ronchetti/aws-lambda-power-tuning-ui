@@ -103,7 +103,7 @@ class App {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Execution Time'
+                    labelString: 'Invocation Time'
                 },
                 position: 'left',
                 id: 'time-axis',
@@ -118,7 +118,7 @@ class App {
                 id: 'cost-axis',
                 scaleLabel: {
                     display: true,
-                    labelString: 'Execution Cost'
+                    labelString: 'Invocation Cost'
                 },
                 // grid line settings
                 gridLines: {
@@ -166,7 +166,7 @@ class App {
         return { powers, times, costs }
     }
 
-    show(hash, hash2 = null, legend = null) {
+    show(hash, hash2 = null, legend1 = "", legend2 = "") {
         try {
             var data = this.parseHash(hash);
         } catch (e) {
@@ -217,14 +217,14 @@ class App {
         let chartData = {
             labels: powerValues,
             datasets: [{
-                label: 'Execution time (ms)',
+                label: `Invocation Time ${(legend1?legend1+" ":"")}(ms)`,
                 borderColor: this.chartColors.red,
                 backgroundColor: this.chartColors.red,
                 fill: false,
                 data: data.times,
                 yAxisID: 'time-axis',
             }, {
-                label: 'Execution Cost (USD)',
+                label: `Invocation Cost ${(legend1?legend1+" ":"")}(USD)`,
                 borderColor: this.chartColors.blue,
                 backgroundColor: this.chartColors.blue,
                 fill: false,
@@ -236,14 +236,14 @@ class App {
         if (hash2) {
             // add two more datasets with different legend & colors (but same axis ID)
             chartData.datasets.push(...[{
-                label: `Execution time ${legend+" "}(ms)`,
+                label: `Invocation Time ${(legend2?legend2+" ":"")}(ms)`,
                 borderColor: this.chartColors.orange,
                 backgroundColor: this.chartColors.orange,
                 fill: false,
                 data: data2.times,
                 yAxisID: 'time-axis',
             }, {
-                label: `Execution Cost ${legend+" "}(USD)`,
+                label: `Invocation Cost ${(legend2?legend2+" ":"")}(USD)`,
                 borderColor: this.chartColors.green,
                 backgroundColor: this.chartColors.green,
                 fill: false,
