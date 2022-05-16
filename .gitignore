@@ -3,6 +3,3 @@ node_modules/
 
 reports/
 /.semverDetails
-
-public/*.js*
-public/*.css*
