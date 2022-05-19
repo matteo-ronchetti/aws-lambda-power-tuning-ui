@@ -1,0 +1,3 @@
+# Common folders to ignore
+node_modules/*
+
